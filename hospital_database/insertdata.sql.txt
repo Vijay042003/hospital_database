@@ -1,0 +1,54 @@
+-- Insert Doctors
+INSERT INTO Doctors (doctor_id, name, specialization, phone_number, email)
+VALUES (1, 'Dr. John Smith', 'Cardiology', '123-456-7890', 'john.smith@hospital.com'),
+       (2, 'Dr. Alice Brown', 'Neurology', '234-567-8901', 'alice.brown@hospital.com');
+
+-- Insert Patients
+INSERT INTO Patients (patient_id, name, address, phone_number, email, date_of_birth, gender)
+VALUES (1, 'Jane Doe', '123 Main St', '345-678-9012', 'jane.doe@example.com', '1985-05-15', 'Female'),
+       (2, 'Bob Johnson', '456 Elm St', '456-789-0123', 'bob.johnson@example.com', '1970-03-22', 'Male');
+
+-- Insert Appointments
+INSERT INTO Appointments (appointment_id, doctor_id, patient_id, appointment_date, appointment_time, status)
+VALUES (1, 1, 1, '2024-08-10', '09:00:00', 'Scheduled'),
+       (2, 2, 2, '2024-08-11', '10:30:00', 'Scheduled');
+
+-- Insert Treatments
+INSERT INTO Treatments (treatment_id, appointment_id, treatment_description, prescription, treatment_date)
+VALUES (1, 1, 'Regular Checkup', 'Vitamin D supplements', '2024-08-10'),
+       (2, 2, 'MRI Scan', 'Pain relievers', '2024-08-11');
+
+-- Insert Billing
+INSERT INTO Billing (bill_id, treatment_id, amount, billing_date, status)
+VALUES (1, 1, 150.00, '2024-08-10', 'Paid'),
+       (2, 2, 500.00, '2024-08-11', 'Pending');
+List all doctors:
+
+SELECT * FROM Doctors;
+List all patients:
+
+
+SELECT * FROM Patients;
+List all appointments for a specific doctor:
+
+
+SELECT * FROM Appointments WHERE doctor_id = 1;
+List all treatments for a specific patient:
+
+
+SELECT t.treatment_description, t.prescription, t.treatment_date
+FROM Treatments t
+JOIN Appointments a ON t.appointment_id = a.appointment_id
+WHERE a.patient_id = 1;
+List all bills with a pending status:
+
+
+SELECT * FROM Billing WHERE status = 'Pending';
+Find the total amount billed to a specific patient:
+
+
+SELECT SUM(b.amount) AS total_billed
+FROM Billing b
+JOIN Treatments t ON b.treatment_id = t.treatment_id
+JOIN Appointments a ON t.appointment_id = a.appointment_id
+WHERE a.patient_id = 1;
